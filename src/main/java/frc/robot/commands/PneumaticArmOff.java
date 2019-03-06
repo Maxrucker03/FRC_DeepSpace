@@ -26,6 +26,8 @@ public class PneumaticArmOff extends Command {
   protected void execute() {
 
     Robot.m_grabberArm.armTurnOff();
+    Robot.m_grabberArm.armGrabberLED = false;
+    Robot.m_ledSubsystem.grabberArm();
 
   }
 

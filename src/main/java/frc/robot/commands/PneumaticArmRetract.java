@@ -26,7 +26,8 @@ public class PneumaticArmRetract extends Command {
   protected void execute() {
 
     Robot.m_grabberArm.armRetract();
-
+    Robot.m_grabberArm.armGrabberLED = true;
+    Robot.m_ledSubsystem.grabberArm();
   }
 
   // Make this return true when this Command no longer needs to run execute()

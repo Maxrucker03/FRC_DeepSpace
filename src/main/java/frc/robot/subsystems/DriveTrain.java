@@ -7,34 +7,43 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import frc.robot.Robot;
 import frc.robot.RobotMap.MapKeys;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
- * Add your docs here.
+
+* Add your docs here.
  */
 public class DriveTrain extends Subsystem {
   //create CAN Talon SRX objects
-  public WPI_TalonSRX m_frontleft;
-  public WPI_TalonSRX m_backleft;
-  public WPI_TalonSRX m_frontright;
-  public WPI_TalonSRX m_backright;
+  public CANSparkMax m_frontleft;
+  public CANSparkMax m_backleft;
+  public CANSparkMax m_frontright;
+  public CANSparkMax m_backright;
   //create drive train and drive train sides objects
   private SpeedControllerGroup m_left;
   private SpeedControllerGroup m_right;
   private DifferentialDrive m_drive;
 
+<<<<<<< HEAD
   private int m_maxAmps = 10;
   private final int TALON_TIMEOUT_MS = 500;
+=======
+  private int m_maxAmps = 40;
+  private double m_rampRate = 0.75; //seconds from 0 to full throttle
+>>>>>>> mixedEncAndPT-MaxFINAL
 
 
 
   public DriveTrain(){
+<<<<<<< HEAD
     //initialize + set objects created above
     m_frontleft = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.DRIVE_FRONTLEFT));
     m_frontleft.configContinuousCurrentLimit(m_maxAmps,TALON_TIMEOUT_MS);
@@ -54,14 +63,47 @@ public class DriveTrain extends Subsystem {
     m_backright.configPeakCurrentLimit(m_maxAmps,TALON_TIMEOUT_MS);
     m_right = new SpeedControllerGroup(m_frontright, m_backright);
     //m_left.setInverted(true); 
-
-    m_drive = new DifferentialDrive(m_left, m_right);
-
+=======
+    
   }
+  public void initialize(){
+    int frontLeftCanID = Robot.m_map.getId(MapKeys.DRIVE_FRONTLEFT);
+    int backLeftCanID = Robot.m_map.getId(MapKeys.DRIVE_BACKLEFT);
+    int frontRightCanID = Robot.m_map.getId(MapKeys.DRIVE_FRONTRIGHT);
+    int backRightCanID = Robot.m_map.getId(MapKeys.DRIVE_BACKRIGHT);
 
+    if ((frontLeftCanID != 0) && (backLeftCanID != 0) && (frontRightCanID != 0) && (backRightCanID != 0)){
+        m_frontleft = new CANSparkMax(frontLeftCanID, MotorType.kBrushless);
+        m_frontleft.setIdleMode(IdleMode.kBrake);
+        m_frontleft.setSmartCurrentLimit(m_maxAmps);
+        m_frontleft.setOpenLoopRampRate(m_rampRate);
+>>>>>>> mixedEncAndPT-MaxFINAL
+
+        m_frontright = new CANSparkMax(frontRightCanID, MotorType.kBrushless);
+        m_frontright.setIdleMode(IdleMode.kBrake);
+        m_frontright.setSmartCurrentLimit(m_maxAmps);
+        m_frontright.setOpenLoopRampRate(m_rampRate);
+
+        m_backleft = new CANSparkMax(backLeftCanID, MotorType.kBrushless);
+        m_backleft.setIdleMode(IdleMode.kBrake);
+        m_backleft.setSmartCurrentLimit(m_maxAmps);
+        m_backleft.setOpenLoopRampRate(m_rampRate);
+
+        m_backright = new CANSparkMax(backRightCanID, MotorType.kBrushless);
+        m_backright.setIdleMode(IdleMode.kBrake);
+        m_backright.setSmartCurrentLimit(m_maxAmps);
+        m_backright.setOpenLoopRampRate(m_rampRate);
+
+        m_right = new SpeedControllerGroup(m_frontright, m_backright);
+        m_left = new SpeedControllerGroup(m_frontleft, m_backleft);
+        m_drive = new DifferentialDrive(m_left, m_right);
+        
+    }
+  }
   public void update(double y, double z){
-    m_drive.arcadeDrive(y, z);
-    //TO-DO: make sure sensor phases are same as motor direction
+    if (m_drive != null){
+      m_drive.arcadeDrive(y, z, true);
+    }
   }
 
 

@@ -26,6 +26,8 @@ public class PneumaticRetractCommand extends Command {
   @Override
   protected void execute() {
     Robot.m_grabberHand.handRetract();
+    Robot.m_grabberHand.grabberHandLED = true;
+    Robot.m_ledSubsystem.grabberHand();
   }
 
   // Make this return true when this Command no longer needs to run execute()

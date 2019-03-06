@@ -23,16 +23,17 @@ public class LiftSubsystem extends Subsystem {
 
   public LiftSubsystem(){
      
-      m_motorup1 = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.LIFT_LEFT));
-      m_motorup1.set(ControlMode.PercentOutput, 0.0);
-      m_motorup2 = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.LIFT_RIGHT));
-      m_motorup2.set(ControlMode.PercentOutput,0.0);
-    
-      m_lift = new SpeedControllerGroup(m_motorup1, m_motorup2);
+  }
 
-    
+  public void initialize(){
+
+    m_motorup1 = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.LIFT_LEFT));
+    m_motorup1.set(ControlMode.PercentOutput, 0.0);
+    m_motorup2 = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.LIFT_RIGHT));
+    m_motorup2.set(ControlMode.PercentOutput,0.0);
   
-
+    m_lift = new SpeedControllerGroup(m_motorup1, m_motorup2);
+    
   }
 
 

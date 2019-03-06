@@ -26,6 +26,8 @@ public class PneumaticArmExtend extends Command {
   protected void execute() {
 
     Robot.m_grabberArm.armExtend();
+    Robot.m_grabberArm.armGrabberLED = true;    
+    Robot.m_ledSubsystem.grabberArm();
 
   }
 

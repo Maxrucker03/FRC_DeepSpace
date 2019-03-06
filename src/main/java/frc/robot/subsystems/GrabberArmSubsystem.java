@@ -18,25 +18,41 @@ public class GrabberArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private DoubleSolenoid m_grabberArm;
-  final int  PCM_ARMCANID = Robot.m_map.getId(MapKeys.PCM_ARMCANID);
+  private int  PCM_ARMCANID = 0;
+  public boolean armGrabberLED;
   public GrabberArmSubsystem() {
-    m_grabberArm = new DoubleSolenoid(
-      Robot.m_map.getId(MapKeys.PCM_ARMCANID),
-      Robot.m_map.getId(MapKeys.SOLENOID_ARMFORWARD),
-      Robot.m_map.getId(MapKeys.SOLENOID_ARMREVERSE)
-    );
-    m_grabberArm.set(DoubleSolenoid.Value.kOff);
+    
   }
-  
+  public void initialize(){
+    PCM_ARMCANID = Robot.m_map.getId(MapKeys.PCM_CLIMBCANID2);
+    if (PCM_ARMCANID != 0){
+      m_grabberArm = new DoubleSolenoid(
+        Robot.m_map.getId(MapKeys.PCM_CLIMBCANID2),
+        Robot.m_map.getId(MapKeys.SOLENOID_ARMFORWARD),
+        Robot.m_map.getId(MapKeys.SOLENOID_ARMREVERSE)
+        );
+      m_grabberArm.set(DoubleSolenoid.Value.kOff);
+      armGrabberLED = false;
+    }
+  }
 
    public void armTurnOff() {
-    m_grabberArm.set(DoubleSolenoid.Value.kOff);
+     if (m_grabberArm != null){
+      m_grabberArm.set(DoubleSolenoid.Value.kOff);
+    }
+    armGrabberLED = false;
   }
   public void armExtend() {
-    m_grabberArm.set(DoubleSolenoid.Value.kForward);
+    if (m_grabberArm != null){
+      m_grabberArm.set(DoubleSolenoid.Value.kForward);
+    }
+    armGrabberLED= true;
   }
   public void armRetract() {
-    m_grabberArm.set(DoubleSolenoid.Value.kReverse);
+    if (m_grabberArm != null){
+      m_grabberArm.set(DoubleSolenoid.Value.kReverse);
+    }
+    armGrabberLED = true;
   }
 
   @Override

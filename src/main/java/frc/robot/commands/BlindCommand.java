@@ -24,7 +24,7 @@ public class BlindCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_ledSubsystem.blindCommand(true);
+    Robot.m_ledSubsystem.blindCommand();
   }
 
   // Make this return true when this Command no longer needs to run execute()

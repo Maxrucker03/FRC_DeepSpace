@@ -23,9 +23,15 @@ public class Slide extends Subsystem {
   private WPI_TalonSRX m_slide;
   private double m_current;
   public Slide(){
+    
+  }
+
+  public void initalize(){
+
     m_slide = new WPI_TalonSRX(Robot.m_map.getId(MapKeys.SLIDE));
     m_current = 0;//Robot.m_pdp.getCurrent(14);
-  }
+
+  } 
 
   @Override
   public void initDefaultCommand() {
